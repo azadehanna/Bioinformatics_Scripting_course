@@ -1,0 +1,21 @@
+
+#251RBIF-100-10 Assignment_1  week_2
+#Author: Azadeh Nikouee
+The goal of this script is to  identify and counte specific DNA motifs within the bacterial genome of R. bifella. 
+
+
+The bash script “week_2_assign.sh” needs two input files including:
+ 1-interesting_motifs.txt: Contains a list of motifs to search for.
+ 2-r_bifella.fasta: The genome sequence file in FASTA format.
+
+Execute the following command to run the bash script "week_2_assign.sh":
+./week_2_assign.sh
+
+The outputs of this script after run:
+ There are two outputs:
+ 1-motif_count.txt is a text file contains the number of motif occurrences in the bacterial genome
+ 2-motifs directory that contains FASTA file for each motif(motif.fast) that includes  all of the genes and their corresponding sequences that have that motif 
+
+
+
+
