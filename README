@@ -1,0 +1,62 @@
+## Assignment3_Week_5
+##Author: Azadeh Nikouee
+
+There are two python scripts for this assignment including:
+1-pipeline.py
+2-report.py
+
+
+1-pipeline.py
+
+ This pipeline has 3 steps:
+
+1-Demultiplexing,
+2-Alignment
+3-Variant Discovery 
+       This pipeline processes a pooled FASTQ file (hawkins_pooled_sequences.fastq) by:
+•	Demultiplexing reads based on sample-specific barcodes (provided in harrington_clinical_data.txt)
+•	Aligning the demultiplexed reads to a reference genome (dgorgon_reference.fa )
+•	Performing variant discovery via a pileup analysis
+Dependencies
+•	Python 3.x
+•	Python modules: os, gzip, subprocess, pysam
+•	BWA for indexing and alignment
+•	SAMtools for converting, sorting, and indexing alignment files
+
+Input files:
+harrington_clinical_data.txt   
+ hawkins_pooled_sequences.fastq 
+ dgorgon_reference.fa
+
+output files:
+A folder called fastqs that contains the demultiplexed fastqs for each sample.
+A folder called bams that contains the sorted.bam (and .bai files) file for each sample.
+A folder called variant_results that contains variant analysis output for each sample.
+
+
+Command line to run pipeline script:
+python3 pipeline.py
+
+##########################################################
+
+2-report.py
+
+This script processes variant discovery results and clinical data to generate a summary report for each sample. For each sample, it reports whether a mutation was detected, and if so, provides details on the position, read coverage, mutated base, and the frequency of that mutation.
+
+
+Dependencies
+Python 3.x
+Python Packages: pandas 
+Built-in modules: os, csv, ast
+
+Inputs:
+1-harrington_clinical_data.txt
+2-Process variant files in  variant results  directory
+
+Outputs:
+report.txt
+
+
+command line to generate report:
+python3 report.py
+
