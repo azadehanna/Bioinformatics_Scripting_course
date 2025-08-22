@@ -1,0 +1,38 @@
+###Assignment 5 -Week10
+Author:Azadeh Nikouee
+
+This script processes clinical data, calculates statistical metrics, selects specific data points based on calculated mean values, and visualizes the results using Seaborn scatter plots.performs K-Means clustering on selected animal distance files. It generates PNG and PDF files for scaterplot and pdf file for K-Mean clustering.
+
+#Input Files
+
+clinical_data.txt: This file contains clinical data used for statistical calculations.
+
+Diversity Scores (./inputfiles/diversityScores/): Directory containing .diversity.txt files for different animals.
+
+Distance Files (./inputfiles/distanceFiles/): Directory containing .distance.txt files used for plotting.
+
+#Output Files
+
+clinical_data.stats.txt: Contains the original clinical data with additional calculated columns (Mean_value and STD_value).
+
+Scatter Plots: Each selected animal has two plot files generated:
+
+{animal}.png
+
+{animal}.pdf
+
+Elbow and K_mean plot generate two pdf files :
+
+{animal}_elbow.pdf
+{animal}_clustered.pdf
+
+
+#Runing Script
+python3   plotassign5.py
+
+
+
+
+
+
+
