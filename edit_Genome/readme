@@ -1,0 +1,131 @@
+#251RBIF-100-1   Assignment2    week3
+
+#Author: Azadeh Nikouee
+
+## README for CRISPR Processing Pipeline
+
+Step1- Create a working directory as "week3" and copy all the input files (clinical_data.txt, motif_list.txt, and exomes/*.fasta) into the directory.
+
+********************
+
+Copy Exomes Based on Clinical Data
+
+step2-First bash script: copyExomes.sh
+
+ The goal of this script is to read clinical_data.txt and filter samples with a diameter of 20–30 mm
+ that have undergone genome sequencing and find  sample name (code_name) and then figure out
+ the relevant fasta file and copy  files into a new directory called exomesCohort. 
+
+The bash script “ copyExomes.sh” needs two input files including:
+ 1-clinical_data.txt: Contains 6 columns including  Discoverer,Location,Diameter(mm),Environment,Status,code_name
+ 2-exomes directory:contains 50 files in FASTA format.
+
+Execute the following command to run the bash script "copyExomes.sh":
+./copyExomes.sh  clinical_data.txt   exomes  
+
+The outputs of this script after run:
+exomesCohort/{exomename}.fasta (Filtered exomes)
+
+********************
+
+Detect Top 3 Most Frequent Motifs in Each Exome
+
+step3-Second bash script: createCrisprReady.sh
+
+ The goal of this script is to analyze exome sequences in the exomesCohort directory,
+ identify the top three most frequent motifs from motif_list.txt in each exome, and
+ extract genes containing at least one of these motifs. The results are saved in a
+ new FASTA file named {exomename}_topmotifs.fasta for each exome.
+
+Input Files
+
+1-exomesCohort directory containing exome sequence files in FASTA format.
+2-motif_list.txt  a text file containing a list of motifs.
+
+
+Execute the following command to run the bash script "createCrisprReady.sh":
+
+./createCrisprReady.sh exomesCohort  motif_list.txt
+
+
+The outputs of this script saved in a directory called "topmotifs" as follow: 
+
+topmotifs/{exomename}_topmotifs.fasta
+
+{exomename}_topmotifs.fasta (Filtered genes containing the top motifs) and saved in topmotifs directory in week3.
+
+ 
+***********
+
+Detect CRISPR  Sites
+
+step4-Third bash script: identifyCrisprSite.sh
+
+ The goal of this script is to identify CRISPR target sites in genes found within topmotifs directory from previous run ( {exomename}_topmotifs.fasta files).
+ It scans sequences for  "NGG", where "N" can be any base and ensures that each identified site has
+ at least 20 base pairs upstream. The extracted sequences are saved into a new FASTA file named {exomename}_precrispr.fasta.
+
+
+Input Files
+ 
+1- "topmotifs"  directory containing exome sequence files in FASTA format.
+    FASTA files containing gene sequences filtered for top motifs.
+
+
+
+Execute the following command to run the bash script "createCrisprReady.sh":
+
+./identifyCrisprSite.sh topmotifs
+
+
+The outputs of this script saved in directory called "crispr_site"
+
+crispr_site/{exomename}_precrispr.fasta
+
+{exomename}_precrispr.fasta – FASTA file for each exome, containing genes with suitable CRISPR target sites.
+ The file retains gene headers and sequences with CRISPR-compatible sites
+
+************************************
+
+Modify CRISPR sites
+
+step5-Fourth bash script: editGenome.sh
+ 
+ The goal  of this script is to modify CRISPR target sequences by inserting an "A" right before the NGG site in each sequence from {exomename}_precrispr.fasta.
+ The modified sequences are saved in {exomename}_postcrispr.fasta .
+
+
+Input Files:
+crispr_site directory that cContains CRISPR target sequences extracted from the genome.
+
+
+Execute the following command to run the bash script  "editGenome.sh":
+
+./editGenome.sh  crispr_site
+
+The outputs of this script after run is saved in edit_Genome directory.
+
+edit_Genome/{exomename}_postcrispr.fasta (Modified sequences with "A" inserted)
+
+************************************
+
+Generate a Summary Report
+
+Step6-exomeReport.py
+
+Creates a summary report of filtered organisms.
+Lists the discoverer, diameter, environment, and first gene sequence.
+
+Input Files:
+
+clinical_data.txt
+edit_Genome directory contains {exomename}_postcrispr.fasta files.
+
+
+Execute the following command to run the exomeReport.py:
+
+python3 exomeReport.py  clinical_data.txt  edit_Genome
+
+
+The outputs of this script after run saves as :
+exome_report.txt (Summary report)
